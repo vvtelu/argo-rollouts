@@ -14,7 +14,29 @@ export interface Revision {
     analysisRuns: RolloutAnalysisRunInfo[];
 }
 
-const ImageItems = (props: {images: ImageInfo[]}) => {
+const handleClick = (applicationName: String, resouceName: String, nameSpace: String, version: String) => {
+    let url = '/api/v1/applications/' + applicationName + '/resource?name=' + resouceName + '&namespace=' + nameSpace + '&resourceName=' + resouceName + '&version=' + version + '&kind=AnalysisRun&group=argoproj.io';
+    fetch(url)
+        .then(response => {
+            // if (response.status > 399) {
+            //   throw new Error("No metrics");
+            // }
+            return response.json()
+        })
+        .then((data: any) => {
+            if (data.manifest.includes('reportUrl')) {
+                let a = JSON.parse(data.manifest);
+                console.log(a.status.metricResults[a.status.metricResults.length - 1].measurements[a.status.metricResults.length - 1].metadata.reportUrl);
+                if (a.status?.metricResults[a.status.metricResults.length - 1]?.measurements[a.status.metricResults.length - 1]?.metadata?.reportUrl) {
+                    window.open(a.status?.metricResults[a.status.metricResults.length - 1]?.measurements[a.status.metricResults.length - 1]?.metadata?.reportUrl, '_blank');
+                }
+            }
+        }).catch(err => {
+            console.error('res.data', err)
+        });
+};
+
+const ImageItems = (props: { images: ImageInfo[] }) => {
     return (
         <div>
             {props.images.map((img) => {
@@ -36,6 +58,7 @@ interface RevisionWidgetProps {
     rollback?: (revision: number) => void;
     current: boolean;
     message: String;
+    appName: String;
 }
 
 export const RevisionWidget = (props: RevisionWidgetProps) => {
@@ -73,7 +96,7 @@ export const RevisionWidget = (props: RevisionWidgetProps) => {
                     {(revision.analysisRuns || []).length > 0 && (
                         <React.Fragment>
                             <div style={{marginTop: '1em'}}>
-                                <AnalysisRunWidget analysisRuns={revision.analysisRuns} />
+                                <AnalysisRunWidget analysisRuns={revision.analysisRuns} appName={props.appName} />
                             </div>
                         </React.Fragment>
                     )}
@@ -83,7 +106,7 @@ export const RevisionWidget = (props: RevisionWidgetProps) => {
     );
 };
 
-const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[]}) => {
+const AnalysisRunWidget = (props: { analysisRuns: RolloutAnalysisRunInfo[], appName?: String }) => {
     const {analysisRuns} = props;
     const [selection, setSelection] = React.useState<RolloutAnalysisRunInfo>(null);
 
@@ -94,6 +117,9 @@ const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[]}) => {
                 {analysisRuns.map((ar) => {
                     let temp = ar.objectMeta.name.split('-');
                     let len = temp.length;
+                    let resourceName = ar.objectMeta.name;
+                    let namespace = ar.objectMeta.namespace;
+                    let version = ar.objectMeta.resourceVersion;
                     return (
                         <Tooltip
                             key={ar.objectMeta?.name}
@@ -117,7 +143,12 @@ const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[]}) => {
                                     ar.status === 'Running' ? 'analysis--pending' : ar.status === 'Successful' ? 'analysis--success' : 'analysis--failure'
                                 }`}>
                                 <ActionButton
-                                    action={() => (selection?.objectMeta.name === ar.objectMeta.name ? setSelection(null) : setSelection(ar))}
+                                    action={() => {
+                                        (selection?.objectMeta.name === ar.objectMeta.name ? setSelection(null) : setSelection(ar));
+                                        if (props?.appName) {
+                                            handleClick(props.appName, resourceName, namespace, version)
+                                        }
+                                    }}
                                     label={`Analysis ${temp[len - 2] + '-' + temp[len - 1]}`}
                                 />
                             </div>
@@ -131,6 +162,7 @@ const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[]}) => {
                     <div style={{marginTop: 5}}>
                         {selection.objectMeta?.name}
                         <i className={`fa ${selection.status === 'Successful' ? 'fa-check-circle analysis--success' : 'fa-times-circle analysis--failure'}`} />
+                        {/* <a href="google.com" >View Report</a> */}
                     </div>
                     {selection?.jobs && (
                         <div className='analysis__run__jobs'>
