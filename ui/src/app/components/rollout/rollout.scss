@@ -409,3 +409,41 @@
         }
     }
 }
+
+.reports {
+    padding-bottom: 5em;
+    &__info {
+        display: flex;
+        width: 100%;
+        margin-bottom: 1.5em;
+        justify-content: center;
+
+        .info {
+            height: 800px;
+        }
+
+        &--bottom {
+            .info {
+                height: max-content;
+            }
+        }
+    }
+
+    &__info {
+        width: 98%;
+        position: absolute;
+        top:0px;
+        height: 100%;
+        z-index: 3;
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+.report-bg {
+    border: 1px solid #ccd6dd;
+    border-radius: 5px;
+    padding: 0px;
+    background-color: #fff;
+}
