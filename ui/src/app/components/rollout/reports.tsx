@@ -48,6 +48,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 setLoading(false)
                 let iframeWin = document.getElementById("iframeWin") as HTMLIFrameElement;;
                 iframeWin.contentWindow.postMessage("MESSAGE", "admin");
+                console.log("IFRAME MSG ", iframeWin)
                 //window.open(reportURL, '_blank');
               }
             }
