@@ -447,3 +447,46 @@
     padding: 0px;
     background-color: #fff;
 }
+.bc-element {
+    display: inline-block;
+    position: relative;
+    left: -5px;
+}
+
+.bc-arrow {
+    float: right;
+    border-top: 17px solid transparent;
+    border-left: 10px solid #149cb5;
+    border-bottom: 16px solid transparent;
+    position: relative;
+    z-index: 1;
+}
+.bc-text {
+    padding: 6px 20px 6px 20px;
+    background: #149cb5;
+    color: white;
+    float: left;
+}
+.bc-text-last {
+    background: #d7e8ed;
+    color: black;
+}
+.bc-arrow-last {
+    border-left: 10px solid #d7e8ed;
+}
+.bc-text-first {
+    padding-left: 20px;
+}
+.bc-first {
+    left: 0px;
+}
+.addPointer{
+    cursor: pointer;
+}
+.bc-before-arrow {
+    background: #149cb5;
+    float: left;
+}
+.bc-hefore-arrow-last {
+    background: rgba(47,65,81, 0.1) !important;
+}
