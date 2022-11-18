@@ -46,7 +46,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(reportURL);
                 setURL(reportURL);
                 setLoading(false);
-                let a = setInterval(() => {
+                let b = setInterval(() => {
                   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
                   if(reportPage){
                     reportPage.contentWindow.postMessage("message", "admin");
@@ -56,7 +56,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 window.addEventListener('message', function(event) {
                   if(typeof event.data == 'string' && event.origin != window.location.origin) {
                     console.log(event.data); // Message received from parent
-                    clearInterval(a);
+                    clearInterval(b);
                   }
                 });
                 //window.open(reportURL, '_blank');
