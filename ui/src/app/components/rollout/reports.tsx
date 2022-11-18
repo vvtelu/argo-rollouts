@@ -46,6 +46,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(reportURL);
                 setURL(reportURL);
                 setLoading(false)
+                let iframeWin = document.getElementById("iframeWin") as HTMLIFrameElement;;
+                iframeWin.contentWindow.postMessage("MESSAGE", "admin");
                 //window.open(reportURL, '_blank');
               }
             }
@@ -66,7 +68,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               style={{ fontSize: '13px', width: '7%', marginBottom: '1em', marginLeft: 'auto' }}
             />
           <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
-          <iframe src={getURL} width="100%" height="90%"></iframe>
+          <iframe src={getURL} width="100%" height="90%" id="iframeWin"></iframe>
            
           </div>
         </div>
