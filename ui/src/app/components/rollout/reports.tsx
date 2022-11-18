@@ -42,7 +42,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               console.log(a);
               console.log(a.status.conditions[a.status.conditions.length - 1].message);
               if (a.status?.conditions[a.status.conditions.length - 1]?.message) {
-                let stringValue = a.status?.conditions[a.status.conditions.length - 1]?.message.split(/\n/)[1];
+                let stringValue = a.status?.conditions[a.status.conditions.length - 1]?.message.split(/\n/)[2];
                 var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim();
                 console.log(reportURL);
                 setURL(reportURL);
