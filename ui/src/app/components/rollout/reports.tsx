@@ -82,7 +82,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               <div className='bc-before-arrow bc-hefore-arrow-last'>
                 <div className='bc-arrow' style={{ borderLeft: '10px solid white' }}></div>
               </div>
-              <div className='bc-text bc-text-last'>{{analysisName}}
+              <div className='bc-text bc-text-last'>{analysisName}
               </div>
               <div className='bc-arrow bc-arrow-last' style={{ zIndex: 2 }}></div>
             </div>
