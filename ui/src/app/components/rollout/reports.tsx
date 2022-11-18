@@ -1,4 +1,4 @@
-import { ActionButton, WaitFor } from 'argo-ui/v2';
+import { WaitFor } from 'argo-ui/v2';
 import * as React from 'react';
 import './rollout.scss';
 import '../pods/pods.scss';
