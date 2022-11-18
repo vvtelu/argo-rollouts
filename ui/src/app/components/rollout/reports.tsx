@@ -45,12 +45,20 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim();
                 console.log(reportURL);
                 setURL(reportURL);
-                setLoading(false)
-                let iframeWin = document.getElementById("iframeWin") as HTMLIFrameElement;
-                if(iframeWin){
-                  iframeWin.contentWindow.postMessage("MESSAGE", "admin");
-                  console.log("IFRAME MSG ", iframeWin)
-                }
+                setLoading(false);
+                let a = setInterval(() => {
+                  let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
+                  if(reportPage){
+                    reportPage.contentWindow.postMessage("message", "admin");
+                    console.log("IFRAME MSG ", reportPage);
+                  }
+                }, 100);
+                window.addEventListener('message', function(event) {
+                  if(typeof event.data == 'string' && event.origin != window.location.origin) {
+                    console.log(event.data); // Message received from parent
+                    clearInterval(a);
+                  }
+                });
                 //window.open(reportURL, '_blank');
               }
             }
@@ -64,15 +72,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
       return (
         <WaitFor loading={loading}>
         <div style={{ margin: '1em', width: '100%', height: '100%' }}>
-        <ActionButton
-              action={() => props.clickback()}
-              label='Back'
-              icon='fa-undo-alt'
-              style={{ fontSize: '13px', width: '7%', marginBottom: '1em', marginLeft: 'auto' }}
-            />
+          <ActionButton
+            action={() => props.clickback()}
+            label='Back'
+            icon='fa-undo-alt'
+            style={{ fontSize: '13px', width: '7%', marginBottom: '1em', marginLeft: 'auto' }}
+          />
           <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
-          <iframe src={getURL} width="100%" height="90%" id="iframeWin"></iframe>
-           
+            <iframe src={getURL} width="100%" height="90%" id="reportPage"></iframe>
           </div>
         </div>
         </WaitFor>
