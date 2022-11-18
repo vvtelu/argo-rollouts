@@ -2,15 +2,16 @@ import { ActionButton, WaitFor } from 'argo-ui/v2';
 import * as React from 'react';
 import './rollout.scss';
 import '../pods/pods.scss';
-// import LoadingSpinner from "./LoadingSpinner";
 
 
 export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [getURL, setURL] = React.useState('');
+    const [analysisName, setAnalysisName] = React.useState('');
     const [loading, setLoading] = React.useState(true);
     const LoadApiCalls = (props: any) => {
       console.log('1stapi',props);
         setLoading(true);
+        setAnalysisName(props?.reportsInput?.analysisName);
         let url2 = '/api/v1/applications/' + props.reportsInput.appName + '/resource?name=' + props.reportsInput.resourceName + '&appNamespace=' + props.reportsInput.nameSpace + '&namespace=' + props.reportsInput.nameSpace + '&resourceName=' + props.reportsInput.resourceName + '&version=' + props.reportsInput.version + '&kind=AnalysisRun&group=argoproj.io';
         fetch(url2)
           .then(response => {
@@ -49,7 +50,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 let b = setInterval(() => {
                   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
                   if(reportPage){
-                    reportPage.contentWindow.postMessage("message", "admin");
+                    reportPage.contentWindow.postMessage("admin","*");
                     console.log("IFRAME MSG ", reportPage);
                   }
                 }, 100);
@@ -72,12 +73,21 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
       return (
         <WaitFor loading={loading}>
         <div style={{ margin: '1em', width: '100%', height: '100%' }}>
-          <ActionButton
-            action={() => props.clickback()}
-            label='Back'
-            icon='fa-undo-alt'
-            style={{ fontSize: '13px', width: '7%', marginBottom: '1em', marginLeft: 'auto' }}
-          />
+          <div>
+            <div className='bc-element bc-first' style={{ left: '0px' }}>
+              <div className='bc-text bc-text-first addPointer'>Back to Dashboard</div>
+              <div className='bc-arrow' style={{ zIndex: 2 }}></div>
+            </div>
+            <div className='bc-element' style={{ left: '-5px' }}>
+              <div className='bc-before-arrow bc-hefore-arrow-last'>
+                <div className='bc-arrow' style={{ borderLeft: '10px solid white' }}></div>
+              </div>
+              <div className='bc-text bc-text-last'>{{analysisName}}
+              </div>
+              <div className='bc-arrow bc-arrow-last' style={{ zIndex: 2 }}></div>
+            </div>
+            <div style={{ clear: 'both' }}></div>
+          </div>
           <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
             <iframe src={getURL} width="100%" height="90%" id="reportPage"></iframe>
           </div>
