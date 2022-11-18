@@ -43,7 +43,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               console.log(a.status.conditions[indexValue].message);
               if (a.status?.conditions[indexValue]?.message) {
-                let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
+                let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[2];
                 var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim();
                 console.log(reportURL);
                 setURL(reportURL);
