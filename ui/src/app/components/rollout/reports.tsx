@@ -48,6 +48,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim();
                 var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
                 console.log(reportURL);
+                console.log(user);
                 setURL(reportURL);
                 setLoading(false);
                 let b = setInterval(() => {
