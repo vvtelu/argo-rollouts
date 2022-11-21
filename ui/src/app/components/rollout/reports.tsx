@@ -43,15 +43,17 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               console.log(a.status.conditions[indexValue].message);
               if (a.status?.conditions[indexValue]?.message) {
-                let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[2];
+                let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
+                let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
                 var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim();
+                var user =  stringValue1.substring(stringValue.indexOf(':') + 1).trim();
                 console.log(reportURL);
                 setURL(reportURL);
                 setLoading(false);
                 let b = setInterval(() => {
                   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
                   if(reportPage){
-                    reportPage.contentWindow.postMessage("admin","*");
+                    reportPage.contentWindow.postMessage(user,"*");
                     console.log("IFRAME MSG ", reportPage);
                   }
                 }, 100);
