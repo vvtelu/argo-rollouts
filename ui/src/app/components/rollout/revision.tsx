@@ -97,8 +97,8 @@ const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[],appNam
         <ThemeDiv className='analysis'>
             <div className='analysis-header'>Analysis Runs</div>
             <div className='analysis__runs'>
-                  {console.log('rollout',props.appName)}
-                  {console.log('analysis', analysisRuns)}
+                  {/* {console.log('rollout',props.appName)} */}
+                  {/* {console.log('analysis', analysisRuns)} */}
                 {analysisRuns.map((ar) => {
                     let temp = ar.objectMeta.name.split('-');
                     let len = temp.length;

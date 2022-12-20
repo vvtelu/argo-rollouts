@@ -9,7 +9,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [analysisName, setAnalysisName] = React.useState('');
     const [loading, setLoading] = React.useState(true);
     const LoadApiCalls = (props: any) => {
-      console.log('1stapi',props);
+      // console.log('1stapi',props);
         setLoading(true);
         setAnalysisName(props?.reportsInput?.analysisName);
         let url2 = '/api/v1/applications/' + props.reportsInput.appName + '/resource?name=' + props.reportsInput.resourceName + '&appNamespace=' + props.reportsInput.nameSpace + '&namespace=' + props.reportsInput.nameSpace + '&resourceName=' + props.reportsInput.resourceName + '&version=' + props.reportsInput.version + '&kind=AnalysisRun&group=argoproj.io';
@@ -20,7 +20,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           .then((data: any) => {
             if (data.manifest.includes('job-name')) {
               let b = JSON.parse(data.manifest);
-              console.log(b);
+              // console.log(b);
               if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
                 fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
               }
@@ -39,31 +39,33 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           .then((data: any) => {
             if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
-              console.log(a);
+              // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
-              console.log(a.status.conditions[indexValue].message);
+              // console.log(a.status.conditions[indexValue].message);
               if (a.status?.conditions[indexValue]?.message) {
+                let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
-                let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
-                var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim();
-                var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
+                // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
+                // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
+                var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
+                var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
                 console.log(reportURL);
-                console.log(user);
+                // console.log(user);
                 setURL(reportURL);
                 setLoading(false);
-                let b = setInterval(() => {
-                  let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
-                  if(reportPage){
-                    reportPage.contentWindow.postMessage(user,"*");
-                    console.log("IFRAME MSG ", reportPage);
-                  }
-                }, 100);
-                window.addEventListener('message', function(event) {
-                  if(typeof event.data == 'string' && event.origin != window.location.origin) {
-                    console.log(event.data); // Message received from parent
-                    clearInterval(b);
-                  }
-                });
+                // let b = setInterval(() => {
+                //   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
+                //   if(reportPage){
+                //     reportPage.contentWindow.postMessage(user,"*");
+                //     // console.log("IFRAME MSG ", reportPage);
+                //   }
+                // }, 100);
+                // window.addEventListener('message', function(event) {
+                //   if(typeof event.data == 'string' && event.origin != window.location.origin) {
+                //     // console.log(event.data); // Message received from parent
+                //     clearInterval(b);
+                //   }
+                // });
                 //window.open(reportURL, '_blank');
               }
             }
