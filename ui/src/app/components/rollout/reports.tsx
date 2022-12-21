@@ -17,6 +17,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
         return false;
       }
     }
+    const closeIcon = (props: any) => {
+      console.log(props);
+    }
     const LoadApiCalls = (props: any) => {
       // console.log('1stapi',props);
         setLoading(true);
@@ -108,7 +111,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
 
       return (
         <WaitFor loading={loading}>
-        <div style={{ margin: '1em', width: '100%', height: '100%' }}>
+        {validUrl && <div style={{ margin: '1em', width: '100%', height: '100%' }}>
           <div>
             <div className='bc-element bc-first' style={{ left: '0px' }} onClick={() => props.clickback()}>
               <div className='bc-text bc-text-first addPointer'>Back to Dashboard</div>
@@ -125,9 +128,13 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             <div style={{ clear: 'both' }}></div>
           </div>
           <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
-          {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
-          {!validUrl && <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center', margin: 'auto'}}>Failed to load, invalid URL</p></div>}          </div>
-        </div>
+          <iframe src={getURL} width="100%" height="90%"></iframe>
+            </div>
+        </div>}
+        {!validUrl && 
+        <div className='toastertop' style={{width: '180px',height: '20px', position: 'fixed',top: '0', right: '0', padding: '10px',background: 'bisque'}}>
+    <p style={{padding:'0',margin:'0'}}>Invalid URL <i onClick={closeIcon} className="fa fa-close"></i></p>
+    </div>}
         </WaitFor>
       );
 };
