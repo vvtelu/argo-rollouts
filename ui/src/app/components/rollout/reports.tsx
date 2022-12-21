@@ -33,9 +33,15 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
                 fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
               }
+            }else{
+              console.log('invalid due to jobname');
+              setValidUrl(false);
+              setLoading(false);
             }
           }).catch(err => {
-            console.error('res.data', err)
+            console.error('res.data', err);
+            setValidUrl(false);
+            setLoading(false);
           });
       };
 
@@ -96,10 +102,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               }
               
             }else{
-              console.log('apifail',data);
+              setValidUrl(false);
+              setLoading(false);
+              console.log('invalid due to message fail');
             }
           }).catch(err => {
-            console.log('apierror',err);
+            console.log('apierror');
+            setValidUrl(false);
+            setLoading(false);
           });
       }
       React.useEffect(() => {
