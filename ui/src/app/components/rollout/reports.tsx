@@ -64,6 +64,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   console.log(reportURL);
                 // console.log(user);
                   if(isValidUrl(reportURL)){
+                    console.log(reportURL);
                     setValidUrl(true);
                     setURL(reportURL);
                     setLoading(false);
@@ -83,17 +84,20 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 //window.open(reportURL, '_blank');
               
                   }else{
+                    console.log('invalidurl');
                     setValidUrl(false);
                     setLoading(false)
                   }
                 }else{
                   setValidUrl(false);
                   setLoading(false);
+                  console.log('report url is not present');
                 }
               }
               
             }
           }).catch(err => {
+            console.log(err);
           });
       }
       React.useEffect(() => {
