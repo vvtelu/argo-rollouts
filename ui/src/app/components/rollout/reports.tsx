@@ -7,7 +7,16 @@ import '../pods/pods.scss';
 export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [getURL, setURL] = React.useState('');
     const [analysisName, setAnalysisName] = React.useState('');
+    const [validUrl, setValidUrl] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
+    const isValidUrl = (props: string) => {
+      try {
+        new URL(props);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
     const LoadApiCalls = (props: any) => {
       // console.log('1stapi',props);
         setLoading(true);
@@ -47,13 +56,18 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
                 // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
                 // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
-                var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
-                var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
-                console.log(reportURL);
+                if(stringValue.split(':')[0].trim() == "reportURL"){
+                  var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
+                  if(reportId){
+                    var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
+                  }
+                  console.log(reportURL);
                 // console.log(user);
-                setURL(reportURL);
-                setLoading(false);
-                // let b = setInterval(() => {
+                  if(isValidUrl(reportURL)){
+                    setValidUrl(true);
+                    setURL(reportURL);
+                    setLoading(false);
+                    // let b = setInterval(() => {
                 //   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
                 //   if(reportPage){
                 //     reportPage.contentWindow.postMessage(user,"*");
@@ -67,7 +81,17 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 //   }
                 // });
                 //window.open(reportURL, '_blank');
+              
+                  }else{
+                    setValidUrl(false);
+                    setLoading(false)
+                  }
+                }else{
+                  setValidUrl(false);
+                  setLoading(false);
+                }
               }
+              
             }
           }).catch(err => {
           });
@@ -95,8 +119,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             <div style={{ clear: 'both' }}></div>
           </div>
           <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
-            <iframe src={getURL} width="100%" height="90%" id="reportPage"></iframe>
-          </div>
+          {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
+          {!validUrl && <div className='reports-viewer__settings'><p style={{ padding: '0.5em', textAlign: 'center'}}>Failed to load, invalid URL</p></div>}          </div>
         </div>
         </WaitFor>
       );
