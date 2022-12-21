@@ -9,6 +9,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [analysisName, setAnalysisName] = React.useState('');
     const [validUrl, setValidUrl] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
+    const [errorMessage, setErrorMessage] = React.useState('');
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
@@ -37,11 +38,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               console.log('invalid due to jobname');
               setValidUrl(false);
               setLoading(false);
+              setErrorMessage('Not able to find the job name');
             }
           }).catch(err => {
-            console.error('res.data', err);
+            console.log(err);
+            console.error('res.data');
             setValidUrl(false);
             setLoading(false);
+            setErrorMessage(err.message);
           });
       };
 
@@ -92,12 +96,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   }else{
                     console.log('invalidurl');
                     setValidUrl(false);
-                    setLoading(false)
+                    setLoading(false);
+                    setErrorMessage('Failed to load, invalid URL');
                   }
                 }else{
                   setValidUrl(false);
                   setLoading(false);
                   console.log('report url is not present');
+                  setErrorMessage('Failed to load, invalid URL');
                 }
               }
               
@@ -105,11 +111,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               setValidUrl(false);
               setLoading(false);
               console.log('invalid due to message fail');
+              setErrorMessage('Failed to load, invalid URL');
             }
           }).catch(err => {
+            console.log(err);
             console.log('apierror');
             setValidUrl(false);
             setLoading(false);
+            setErrorMessage(err.message);
           });
       }
       React.useEffect(() => {
@@ -139,7 +148,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             </div>
         </div>}
         {!validUrl && 
-        <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center', margin: 'auto'}}>Failed to load, invalid URL</p></div>}
+        <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center'}}>{errorMessage}</p></div>}
         </WaitFor>
       );
 };
