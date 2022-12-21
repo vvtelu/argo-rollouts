@@ -20,6 +20,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     }
     const LoadApiCalls = (props: any) => {
       // console.log('1stapi',props);
+        setErrorMessage('');
         setLoading(true);
         setAnalysisName(props?.reportsInput?.analysisName);
         let url2 = '/api/v1/applications/' + props.reportsInput.appName + '/resource?name=' + props.reportsInput.resourceName + '&appNamespace=' + props.reportsInput.nameSpace + '&namespace=' + props.reportsInput.nameSpace + '&resourceName=' + props.reportsInput.resourceName + '&version=' + props.reportsInput.version + '&kind=AnalysisRun&group=argoproj.io';
@@ -35,17 +36,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
               }
             }else{
-              console.log('invalid due to jobname');
               setValidUrl(false);
               setLoading(false);
               setErrorMessage('Not able to find the job name');
             }
           }).catch(err => {
-            console.log(err);
-            console.error('res.data');
             setValidUrl(false);
             setLoading(false);
-            setErrorMessage(err.message);
+            setErrorMessage('Failed to load, invalid URL');
           });
       };
 
@@ -71,10 +69,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   if(reportId){
                     var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
                   }
-                  console.log(reportURL);
                 // console.log(user);
                   if(isValidUrl(reportURL)){
-                    console.log(reportURL);
                     setValidUrl(true);
                     setURL(reportURL);
                     setLoading(false);
@@ -94,7 +90,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 //window.open(reportURL, '_blank');
               
                   }else{
-                    console.log('invalidurl');
                     setValidUrl(false);
                     setLoading(false);
                     setErrorMessage('Failed to load, invalid URL');
@@ -102,7 +97,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 }else{
                   setValidUrl(false);
                   setLoading(false);
-                  console.log('report url is not present');
                   setErrorMessage('Failed to load, invalid URL');
                 }
               }
@@ -110,15 +104,12 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             }else{
               setValidUrl(false);
               setLoading(false);
-              console.log('invalid due to message fail');
               setErrorMessage('Failed to load, invalid URL');
             }
           }).catch(err => {
-            console.log(err);
-            console.log('apierror');
             setValidUrl(false);
             setLoading(false);
-            setErrorMessage(err.message);
+            setErrorMessage('Failed to load, invalid URL');
           });
       }
       React.useEffect(() => {
@@ -127,8 +118,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
 
       return (
         <WaitFor loading={loading}>
-        {validUrl && <div style={{ margin: '1em', width: '100%', height: '100%' }}>
-          <div>
+        <div style={{ margin: '1em', width: '100%', height: '100%' }}>
             <div className='bc-element bc-first' style={{ left: '0px' }} onClick={() => props.clickback()}>
               <div className='bc-text bc-text-first addPointer'>Back to Dashboard</div>
               <div className='bc-arrow' style={{ zIndex: 2 }}></div>
@@ -144,11 +134,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             <div style={{ clear: 'both' }}></div>
           </div>
           <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
-          <iframe src={getURL} width="100%" height="90%"></iframe>
-            </div>
-        </div>}
-        {!validUrl && 
-        <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center'}}>{errorMessage}</p></div>}
+          {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
+          {!validUrl && 
+          <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center'}}>{errorMessage}</p></div>}
+        </div>
+        
         </WaitFor>
       );
 };
