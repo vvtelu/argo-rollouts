@@ -17,9 +17,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
         return false;
       }
     }
-    const closeIcon = (props: any) => {
-      console.log(props);
-    }
     const LoadApiCalls = (props: any) => {
       // console.log('1stapi',props);
         setLoading(true);
@@ -132,9 +129,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             </div>
         </div>}
         {!validUrl && 
-        <div className='toastertop' style={{width: '180px',height: '20px', position: 'fixed',top: '0', right: '0', padding: '10px',background: 'bisque'}}>
-    <p style={{padding:'0',margin:'0'}}>Invalid URL <i onClick={closeIcon} className="fa fa-close"></i></p>
-    </div>}
+        <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center', margin: 'auto'}}>Failed to load, invalid URL</p></div>}
         </WaitFor>
       );
 };
