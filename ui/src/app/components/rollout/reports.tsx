@@ -95,9 +95,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 }
               }
               
+            }else{
+              console.log('apifail',data);
             }
           }).catch(err => {
-            console.log(err);
+            console.log('apierror',err);
           });
       }
       React.useEffect(() => {
@@ -124,7 +126,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           </div>
           <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
           {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
-          {!validUrl && <div className='reports-viewer__settings'><p style={{ padding: '0.5em', textAlign: 'center'}}>Failed to load, invalid URL</p></div>}          </div>
+          {!validUrl && <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center', margin: 'auto'}}>Failed to load, invalid URL</p></div>}          </div>
         </div>
         </WaitFor>
       );
