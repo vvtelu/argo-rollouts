@@ -132,13 +132,10 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               <div className='bc-arrow bc-arrow-last' style={{ zIndex: 2 }}></div>
             </div>
             <div style={{ clear: 'both' }}></div>
-          </div>
-          <div style={{ width: '100%', alignItems: 'center', height: '100%' }}>
-          {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
-          {!validUrl && 
-          <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center'}}>{errorMessage}</p></div>}
+            {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
+            {!validUrl && 
+            <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center'}}>{errorMessage}</p></div>}
         </div>
-        
         </WaitFor>
       );
 };
