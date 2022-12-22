@@ -127,7 +127,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
           {!validUrl && 
           <div style={{width: '100%', height: '100%', backgroundColor:'#dae1eb'}}>
-            <div className="application-details__tree">
+            <div className="reports__error">
               <div className="empty-state">
                 <div className="empty-state__icon">
                   <i className="fa fa-file"></i>
