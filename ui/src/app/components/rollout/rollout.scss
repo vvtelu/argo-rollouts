@@ -447,6 +447,12 @@
     padding: 0px;
     background-color: #fff;
 }
+.report-error-bg {
+    border: 1px solid #ccd6dd;
+    border-radius: 5px;
+    padding: 0px;
+    background-color: #dae1eb;
+}
 .bc-element {
     display: inline-block;
     position: relative;
@@ -513,4 +519,11 @@
     height: 15em;
     border-radius: 7.5em;
     margin: 2em auto;
+}
+.empty-state__icon i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    color: #fff;
 }
