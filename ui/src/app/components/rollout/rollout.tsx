@@ -116,7 +116,9 @@ export const RolloutWidget = (props: {rollout: RolloutRolloutInfo; interactive?:
     return (
         <React.Fragment>
                 {showreport && 
-                   <ReportsWidget clickback={()=> setreport(false)} reportsInput={revisionData}/>}
+               <ThemeDiv id ='reportId' className='report-bg reports__info'>
+                   <ReportsWidget clickback={()=> setreport(false)} reportsInput={revisionData}/>
+                </ThemeDiv>}
             <div className='rollout__row rollout__row--top'>
                 <ThemeDiv className='info rollout__info'>
                     <div className='info__title'>Summary</div>
