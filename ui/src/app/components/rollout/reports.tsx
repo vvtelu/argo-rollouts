@@ -134,7 +134,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             <div style={{ clear: 'both' }}></div>
             {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
             {!validUrl && 
-            <div className='reports-viewer__settings'><p style={{ padding: '2.5em', textAlign: 'center'}}>{errorMessage}</p></div>}
+            <div className='reports-viewer__settings box'>Analysis not performed or Report not available.</div>}
         </div>
         </WaitFor>
       );
