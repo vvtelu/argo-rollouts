@@ -110,7 +110,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
 
       return (
         <WaitFor loading={loading}>
-        {validUrl && <ThemeDiv id ='reportId' className='report-bg reports__info'>
+        <ThemeDiv id ='reportId' className={validUrl ? 'report-bg reports_info' : 'report-error-bg reports_info'}>
           <div style={{ margin: '1em', width: '100%', height: '100%' }}>
               <div className='bc-element bc-first' style={{ left: '0px' }} onClick={() => props.clickback()}>
                 <div className='bc-text bc-text-first addPointer'>Back to Dashboard</div>
@@ -125,20 +125,18 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 <div className='bc-arrow bc-arrow-last' style={{ zIndex: 2 }}></div>
               </div>
               <div style={{ clear: 'both' }}></div>
-              <iframe src={getURL} width="100%" height="90%"></iframe>
-          </div>
-        </ThemeDiv>}
-        {!validUrl && <ThemeDiv id ='reportId' className='report-error-bg  reports__info'>
-          <div className="application-details__tree">
-              <div className="empty-state">
-                <div className="empty-state__icon">
-                  <i className="fa fa-file"></i>
+              {validUrl && <iframe src={getURL} width="100%" height="90%"></iframe>}
+              {!validUrl && <div className="application-details__tree">
+                <div className="empty-state">
+                  <div className="empty-state__icon">
+                    <i className="fa fa-file"></i>
+                  </div>
+                  <h4 style={{color:'#155362'}}>Analysis not performed or Report not available</h4>
+                  <h5></h5>
                 </div>
-              <h4 style={{color:'#006f8a'}}>Analysis not performed or Report not available</h4>
-              <h5></h5>
-            </div>
-           </div>
-        </ThemeDiv>}
+            </div>}
+          </div>
+        </ThemeDiv>
         </WaitFor>
       );
 };
