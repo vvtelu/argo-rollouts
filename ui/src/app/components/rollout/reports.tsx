@@ -74,6 +74,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               // console.log(a.status.conditions[indexValue].message);
+              console.log(a.status?.condition[indexValue]?.type);
               if (a.status?.conditions[indexValue]?.message && a.status?.condition[indexValue]?.type == 'OpsmxAnalysis') {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
@@ -81,9 +82,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
                 if(stringValue.split(':')[0].trim() == "reportURL"){
                   var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
-                  if(reportId){
+                 // if(reportId){
                     var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
-                  }
+                 // }
                 // console.log(user);
                   if(isValidUrl(reportURL)){
                     setValidUrl(true);
