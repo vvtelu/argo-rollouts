@@ -38,11 +38,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   console.log(element.measurements[0]?.metadata['job-name']);
                     newJobs.push(element.measurements[0]?.metadata['job-name']);
                     if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
-                      console.log('type  ' + {analysisType});
+                      console.log('type  ' + analysisType);
                       console.log(analysisType.toLowerCase());
-                      if(analysisType != 'OpsmxAnalysis'){
+                     // if(analysisType != 'OpsmxAnalysis'){
                         fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
-                      }
+                      //}
                     }
                  // }
                 });
@@ -68,72 +68,75 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           .then((data: any) => {
             console.log(analysisType);
             // console.log(data.manifest);
-            if (data.manifest.includes('message')) {
-              let a = JSON.parse(data.manifest);
-              console.log(a.status.hasOwnProperty('succeeded'));
-              console.log(a.status.conditions);
-              console.log(a.status.conditions.length);
-
-              // console.log(a);
-              var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
-              console.log(indexValue);
-               console.log(a.status.conditions[indexValue].message);
-              console.log(a.status.conditions[indexValue].type);
-              alert(a.status.conditions[indexValue].type);
-              setAnalysisType(a.status.conditions[indexValue].type);
-              alert({analysisType});
-              if (a.status?.conditions[indexValue]?.message) {
-                let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
-                let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
-                console.log(stringValue);
-                console.log(stringValue2);
-                // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
-                // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
-                if(stringValue.split(':')[0].trim() == "reportURL"){
-                  var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
-                  if(reportId){
-                    var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
-                  }
-                // console.log(user);
-                  if(isValidUrl(reportURL)){
-                    setValidUrl(true);
-                    setURL(reportURL);
-                    setLoading(false);
-                    // let b = setInterval(() => {
-                //   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
-                //   if(reportPage){
-                //     reportPage.contentWindow.postMessage(user,"*");
-                //     // console.log("IFRAME MSG ", reportPage);
-                //   }
-                // }, 100);
-                // window.addEventListener('message', function(event) {
-                //   if(typeof event.data == 'string' && event.origin != window.location.origin) {
-                //     // console.log(event.data); // Message received from parent
-                //     clearInterval(b);
-                //   }
-                // });
-                //window.open(reportURL, '_blank');
-              
+            alert(analysisType);
+            if(analysisType != 'OpsmxAnalysis'){
+              if (data.manifest.includes('message')) {
+                let a = JSON.parse(data.manifest);
+                console.log(a.status.hasOwnProperty('succeeded'));
+                console.log(a.status.conditions);
+                console.log(a.status.conditions.length);
+  
+                // console.log(a);
+                var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
+                console.log(indexValue);
+                 console.log(a.status.conditions[indexValue].message);
+                console.log(a.status.conditions[indexValue].type);
+                alert('status',a.status.conditions[indexValue].type);
+                setAnalysisType(a.status.conditions[indexValue].type);
+                console.log(analysisType);
+                if (a.status?.conditions[indexValue]?.message) {
+                  let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
+                  let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
+                  console.log(stringValue);
+                  console.log(stringValue2);
+                  // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
+                  // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
+                  if(stringValue.split(':')[0].trim() == "reportURL"){
+                    var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
+                    if(reportId){
+                      var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
+                    }
+                  // console.log(user);
+                    if(isValidUrl(reportURL)){
+                      setValidUrl(true);
+                      setURL(reportURL);
+                      setLoading(false);
+                      // let b = setInterval(() => {
+                  //   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
+                  //   if(reportPage){
+                  //     reportPage.contentWindow.postMessage(user,"*");
+                  //     // console.log("IFRAME MSG ", reportPage);
+                  //   }
+                  // }, 100);
+                  // window.addEventListener('message', function(event) {
+                  //   if(typeof event.data == 'string' && event.origin != window.location.origin) {
+                  //     // console.log(event.data); // Message received from parent
+                  //     clearInterval(b);
+                  //   }
+                  // });
+                  //window.open(reportURL, '_blank');
+                
+                    }else{
+                      setValidUrl(false);
+                      setLoading(false);
+                    }
                   }else{
                     setValidUrl(false);
                     setLoading(false);
                   }
-                }else{
+                }
+                
+              }else{
+                console.log('its coming inside else');
+                console.log(analysisType);
+                if(analysisType != 'OpsmxAnalysis'){
                   setValidUrl(false);
                   setLoading(false);
                 }
+                
               }
-              
-            }else{
-              alert({analysisType})
-              console.log('its coming inside else');
-              console.log(analysisType);
-              if(analysisType.toLowerCase() != 'opsmxanalysis'){
-                setValidUrl(false);
-                setLoading(false);
-              }
-              
             }
+            
           }).catch(err => {
             setValidUrl(false);
             setLoading(false);
