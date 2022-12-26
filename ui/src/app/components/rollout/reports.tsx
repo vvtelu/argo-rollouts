@@ -17,13 +17,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
         return false;
       }
     }
-    // const getJobs = (props:any) => {
-    //   const dd = [];
-    //         //  const mResults = b.status?.metricResults;
-    //             props.forEach((element:any) => {
-    //               f.push()
-    //           });
-    // }
     const LoadApiCalls = (props: any) => {
       // console.log('1stapi',props);
         setLoading(true);
@@ -31,13 +24,12 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
         let url2 = '/api/v1/applications/' + props.reportsInput.appName + '/resource?name=' + props.reportsInput.resourceName + '&appNamespace=' + props.reportsInput.nameSpace + '&namespace=' + props.reportsInput.nameSpace + '&resourceName=' + props.reportsInput.resourceName + '&version=' + props.reportsInput.version + '&kind=AnalysisRun&group=argoproj.io';
         fetch(url2)
           .then(response => {
-            return response.json();
+            return response.json()
           })
           .then((data: any) => {
             if (data.manifest.includes('job-name')) {
               let b = JSON.parse(data.manifest);
               // console.log(b);
-              //getJobs(b.status?.metricResults);
               const newJobs = [];
               const mResults = b.status?.metricResults;
                 mResults.forEach((element:any,index:number) => {
@@ -49,8 +41,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                     }
                  // }
                 });
-
-             
+              // if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
+              //   fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
+              // }
             }else{
               setValidUrl(false);
               setLoading(false);
@@ -68,13 +61,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             return response.json()
           })
           .then((data: any) => {
-            console.log(index);
             if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
               // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               // console.log(a.status.conditions[indexValue].message);
-              console.log(a.status?.condition[indexValue]?.type);
               if (a.status?.conditions[indexValue]?.message && a.status?.condition[indexValue]?.type == 'OpsmxAnalysis') {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
@@ -82,9 +73,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
                 if(stringValue.split(':')[0].trim() == "reportURL"){
                   var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
-                 // if(reportId){
+                  if(reportId){
                     var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
-                 // }
+                  }
                 // console.log(user);
                   if(isValidUrl(reportURL)){
                     setValidUrl(true);
