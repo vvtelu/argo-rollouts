@@ -61,15 +61,18 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             return response.json()
           })
           .then((data: any) => {
+            console.log(data.manifest);
             if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
               // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               // console.log(a.status.conditions[indexValue].message);
               console.log(a.status?.condition[indexValue]?.type);
-              if (a.status?.conditions[indexValue]?.message && a.status?.condition[indexValue]?.type == 'OpsmxAnalysis') {
+              if (a.status?.conditions[indexValue]?.message) {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
+                console.log(stringValue);
+                console.log(stringValue2);
                 // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
                 // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
                 if(stringValue.split(':')[0].trim() == "reportURL"){
