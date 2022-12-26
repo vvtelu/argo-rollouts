@@ -9,6 +9,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [analysisName, setAnalysisName] = React.useState('');
     const [validUrl, setValidUrl] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
+    const [analysisType, setAnalysisType] = React.useState('');
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
@@ -37,7 +38,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   console.log(element.measurements[0]?.metadata['job-name']);
                     newJobs.push(element.measurements[0]?.metadata['job-name']);
                     if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
-                      fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
+                      if(analysisType.toLowerCase() != 'opsmxanalysis'){
+                        fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
+                      }
                     }
                  // }
                 });
@@ -73,6 +76,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               console.log(indexValue);
                console.log(a.status.conditions[indexValue].message);
               console.log(a.status?.conditions[indexValue]?.type);
+              setAnalysisType(a.status?.conditions[indexValue]?.type);
               if (a.status?.conditions[indexValue]?.message) {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
