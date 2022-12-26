@@ -38,9 +38,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   console.log(element.measurements[0]?.metadata['job-name']);
                     newJobs.push(element.measurements[0]?.metadata['job-name']);
                     if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
-                      console.log('type  ' + analysisType);
+                      console.log('type  ' + {analysisType});
                       console.log(analysisType.toLowerCase());
-                      if(analysisType.toLowerCase() != 'opsmxanalysis'){
+                      if(analysisType != 'OpsmxAnalysis'){
                         fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
                       }
                     }
@@ -81,7 +81,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               console.log(a.status.conditions[indexValue].type);
               alert(a.status.conditions[indexValue].type);
               setAnalysisType(a.status.conditions[indexValue].type);
-              alert(analysisType);
+              alert({analysisType});
               if (a.status?.conditions[indexValue]?.message) {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
@@ -125,6 +125,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               }
               
             }else{
+              alert({analysisType})
               console.log('its coming inside else');
               console.log(analysisType);
               if(analysisType.toLowerCase() != 'opsmxanalysis'){
