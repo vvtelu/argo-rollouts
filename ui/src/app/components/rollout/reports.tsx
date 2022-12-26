@@ -38,11 +38,15 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   console.log(element.measurements[0]?.metadata['job-name']);
                     newJobs.push(element.measurements[0]?.metadata['job-name']);
                     if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
-                      console.log('type  ' + analysisType);
+                      
+                      setTimeout(() => {
+                        console.log('type  ' + analysisType);
                       console.log(analysisType.toLowerCase());
-                     // if(analysisType != 'OpsmxAnalysis'){
-                        fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
-                      //}
+                        if(analysisType != 'OpsmxAnalysis'){
+                          fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
+                        }
+                      }, 500);
+                      
                     }
                  // }
                 });
@@ -66,9 +70,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             return response.json()
           })
           .then((data: any) => {
-            console.log(analysisType);
             // console.log(data.manifest);
-            alert(analysisType);
+            setTimeout(() => {
+              alert(analysisType);
+              console.log(analysisType);
+            },200);
             if(analysisType != 'OpsmxAnalysis'){
               if (data.manifest.includes('message')) {
                 let a = JSON.parse(data.manifest);
