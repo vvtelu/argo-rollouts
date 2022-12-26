@@ -38,6 +38,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   console.log(element.measurements[0]?.metadata['job-name']);
                     newJobs.push(element.measurements[0]?.metadata['job-name']);
                     if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
+                      console.log(analysisType);
+                      console.log(analysisType.toLowerCase());
                       if(analysisType.toLowerCase() != 'opsmxanalysis'){
                         fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
                       }
@@ -64,6 +66,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             return response.json()
           })
           .then((data: any) => {
+            console.log(analysisType);
             console.log(data.manifest);
             if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
@@ -77,7 +80,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                console.log(a.status.conditions[indexValue].message);
               console.log(a.status?.conditions[indexValue]?.type);
               setAnalysisType(a.status?.conditions[indexValue]?.type);
-              if (a.status?.conditions[indexValue]?.message) {
+              if (a.status?.conditions[indexValue]?.message && analysisType.toLowerCase() == 'opsmxanalysis') {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
                 console.log(stringValue);
@@ -120,8 +123,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               }
               
             }else{
-              setValidUrl(false);
-              setLoading(false);
+              if(analysisType.toLowerCase() != 'opsmxanalysis'){
+                setValidUrl(false);
+                setLoading(false);
+              }
+              
             }
           }).catch(err => {
             setValidUrl(false);
