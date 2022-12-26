@@ -81,7 +81,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(indexValue);
                  console.log(a.status.conditions[indexValue].message);
                 console.log(a.status.conditions[indexValue].type);
-                alert('status',a.status.conditions[indexValue].type);
                 setAnalysisType(a.status.conditions[indexValue].type);
                 console.log(analysisType);
                 if (a.status?.conditions[indexValue]?.message) {
