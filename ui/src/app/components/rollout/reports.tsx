@@ -70,7 +70,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             console.log(analysisType);
             // console.log(data.manifest);
             alert(analysisType);
-            if(analysisType != 'OpsmxAnalysis'){
               if (data.manifest.includes('message')) {
                 let a = JSON.parse(data.manifest);
                 console.log(a.status.hasOwnProperty('succeeded'));
@@ -145,7 +144,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 }
                 
               }
-            }
+            
             
           }).catch(err => {
             setValidUrl(false);
