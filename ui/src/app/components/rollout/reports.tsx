@@ -31,17 +31,18 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             if (data.manifest.includes('job-name')) {
               let b = JSON.parse(data.manifest);
               // console.log(b);
-              const newJobs = [];
+              const newJobs: any[] = [];
               const mResults = b.status?.metricResults;
                 mResults.forEach((element:any,index:number) => {
                  // if(element.name.includes('opsmx')){
                   console.log(element.measurements[0]?.metadata['job-name']);
                     newJobs.push(element.measurements[0]?.metadata['job-name']);
                     if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
-                      console.log(analysisType);
-                      // if(analysisType != 'OpsmxAnalysis'){
-                        fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index);
-                      // }
+                      console.log('type  ' + analysisType);
+                      console.log(analysisType.toLowerCase());
+                     // if(analysisType != 'OpsmxAnalysis'){
+                        fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'],index, newJobs);
+                      //}
                     }
                  // }
                 });
@@ -58,8 +59,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           });
       };
 
-    const fetchEndpointURL = (applicationName: String, resouceName: String, nameSpace: String, version: String, jobName: String, index:number) => {
-        let url3 = '/api/v1/applications/' + applicationName + '/resource?name=' + jobName + '&appNamespace=' + nameSpace + '&namespace=' + nameSpace + '&resourceName=' + jobName + '&version=v1&kind=Job&group=batch'
+    const fetchEndpointURL = (applicationName: String, resouceName: String, nameSpace: String, version: String, jobName: String, index:number,jobList: any) => {
+      const [array, setArray] = React.useState([]);
+      let url3 = '/api/v1/applications/' + applicationName + '/resource?name=' + jobName + '&appNamespace=' + nameSpace + '&namespace=' + nameSpace + '&resourceName=' + jobName + '&version=v1&kind=Job&group=batch'
         fetch(url3)
           .then(response => {
             return response.json()
@@ -67,7 +69,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           .then((data: any) => {
             console.log(analysisType);
             // console.log(data.manifest);
-           
+            alert(analysisType);
             if(analysisType != 'OpsmxAnalysis'){
               if (data.manifest.includes('message')) {
                 let a = JSON.parse(data.manifest);
@@ -80,6 +82,16 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(indexValue);
                  console.log(a.status.conditions[indexValue].message);
                 console.log(a.status.conditions[indexValue].type);
+                alert(a.status.conditions[indexValue].type);
+                if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
+               //   setData(a.status.conditions[indexValue]);
+                  setArray((array) => [...array, a.status.conditions[indexValue]]);
+                  if(jobList.slice - 1 == index){
+                    console.log(array.map((x) => new Date(x.lastProbeTime)).sort().slice(-1));
+                  }
+                  
+                }
+                console.log(array);
                 setAnalysisType(a.status.conditions[indexValue].type);
                 console.log(analysisType);
                 if (a.status?.conditions[indexValue]?.message) {
@@ -142,7 +154,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
       }
       React.useEffect(() => {
         { LoadApiCalls(props) }
-      }, [analysisType]);
+      }, []);
 
       return (
       <WaitFor loading={loading}>
