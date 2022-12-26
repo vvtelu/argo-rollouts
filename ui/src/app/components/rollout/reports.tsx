@@ -116,8 +116,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               }
               
             }else{
-              // setValidUrl(false);
-              // setLoading(false);
+              setValidUrl(false);
+              setLoading(false);
             }
           }).catch(err => {
             setValidUrl(false);
