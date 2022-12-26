@@ -65,13 +65,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
               console.log(a.status.hasOwnProperty('succeeded'));
-              console.log(a.status.condition.length);
+              console.log(a.status.conditions);
+              console.log(a.status.conditions.length);
 
               // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               console.log(indexValue);
                console.log(a.status.conditions[indexValue].message);
-              console.log(a.status?.condition[indexValue]?.type);
+              console.log(a.status?.conditions[indexValue]?.type);
               if (a.status?.conditions[indexValue]?.message) {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
