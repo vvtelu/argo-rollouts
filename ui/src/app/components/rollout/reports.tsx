@@ -64,9 +64,13 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             console.log(data.manifest);
             if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
+              console.log(a.status.hasOwnProperty('succeeded'));
+              console.log(a.status.condition.length);
+
               // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
-              // console.log(a.status.conditions[indexValue].message);
+              console.log(indexValue);
+               console.log(a.status.conditions[indexValue].message);
               console.log(a.status?.condition[indexValue]?.type);
               if (a.status?.conditions[indexValue]?.message) {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
@@ -111,8 +115,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               }
               
             }else{
-              setValidUrl(false);
-              setLoading(false);
+              // setValidUrl(false);
+              // setLoading(false);
             }
           }).catch(err => {
             setValidUrl(false);
