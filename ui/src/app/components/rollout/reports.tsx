@@ -64,12 +64,15 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         let a = JSON.parse(data.manifest);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
         console.log(conditionArray);
-        if(conditionArray.length != 0){
           const latest = conditionArray.reduce(function (r, a) {
             return r.lastProbeTime > a.lastProbeTime ? r : a;
           });
   
           if (jobsList.length - 1 === lastIterationJob) {
+            console.log(latest);
+            console.log('insidelatest');
+            console.log(conditionArray.length);
+            console.log(conditionArray)
             console.log(latest.message);
             let stringValue2 = latest.message.split(/\n/)[4];
             let stringValue = latest.message.split(/\n/)[3];
@@ -88,15 +91,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
               }
             } 
           }
-        }else{
-          console.log('its coming here');
-          setTimeout(() => {
-            setValidUrl(false);
-            setLoading(false);
-          }, 300);
-        }
-       
-
       }).catch(err => {
       });
   }
