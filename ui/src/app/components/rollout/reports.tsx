@@ -36,7 +36,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               // console.log(b);
               const newJobs: any[] = [];
               const mResults = b.status?.metricResults;
-              for(let k=0;k<3;k++){
+            //  for(let k=0;k<3;k++){
                 mResults.forEach((element:any,index:number) => {
                  // if(element.name.includes('opsmx')){
                   console.log(element.measurements[0]?.metadata['job-name']);
@@ -51,7 +51,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 //  console.log(newJobs);
                 jobArray = newJobs;
                 });
-              }
+            //  }
               // if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
               //   fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
               // }
@@ -99,9 +99,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(latest);
                 console.log(index);
                 console.log(jobArray);
-                if(jobArray.length-1){
-                  
-                }
+                if(jobArray.length-1 === index){
+                  console.log('execute the new function here');
+                } 
 
                 // let stringValue2 = latest.message.split(/\n/)[4];
                 // let stringValue = latest.message.split(/\n/)[3];
