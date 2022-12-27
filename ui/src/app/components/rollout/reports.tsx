@@ -11,7 +11,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [loading, setLoading] = React.useState(true);
     const [analysisType, setAnalysisType] = React.useState('');
     // const [jobs, setTotalJobs] = React.useState(null);
-    let conditionArray: any[] = [];
+    let conditionArray: any;
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
