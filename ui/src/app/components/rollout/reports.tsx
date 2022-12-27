@@ -13,6 +13,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     // const [jobs, setTotalJobs] = React.useState(null);
     let conditionArray: any[] = [];
     let jobArray: any[] = [];
+    let lastIterationJob = 0;
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
@@ -50,6 +51,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 //  setTotalJobs(newJobs.length-1);
                 //  console.log(newJobs);
                 jobArray = newJobs;
+                lastIterationJob = newJobs.length-1;
+                console.log(newJobs.length);
                 });
             //  }
               // if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
@@ -98,8 +101,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
 
                 console.log(latest);
                 console.log(index);
+                console.log(lastIterationJob)
                 console.log(jobArray);
-                if(jobArray.length-1 === index){
+                if(jobArray.length-1 === lastIterationJob){
                   console.log(latest.message);
                   console.log('execute the new function here');
                   let stringValue2 = latest.message.split(/\n/)[4];
