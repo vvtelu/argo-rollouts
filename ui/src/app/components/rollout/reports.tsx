@@ -23,7 +23,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
     }
   }
   const LoadApiCalls = (props: any) => {
-    // console.log('1stapi',props);
     setLoading(true);
     setAnalysisName(props?.reportsInput?.analysisName);
     let url2 = '/api/v1/applications/' + props.reportsInput.appName + '/resource?name=' + props.reportsInput.resourceName + '&appNamespace=' + props.reportsInput.nameSpace + '&namespace=' + props.reportsInput.nameSpace + '&resourceName=' + props.reportsInput.resourceName + '&version=' + props.reportsInput.version + '&kind=AnalysisRun&group=argoproj.io';
@@ -63,10 +62,10 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         return response.json()
       })
       .then((data: any) => {
-        console.log(index);
         let a = JSON.parse(data.manifest);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
         console.log(a.status.conditions);
+        console.log('=============================');
         console.log(JSON.stringify(conditionArray));
         const latest = conditionArray.reduce(function (r, a) {
           return r.lastProbeTime > a.lastProbeTime ? r : a;
@@ -74,7 +73,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
 
         if (jobsList.length - 1 === lastIterationJob) {
           console.log(latest.message);
-          console.log('execute the new function here');
           let stringValue2 = latest.message.split(/\n/)[4];
           let stringValue = latest.message.split(/\n/)[3];
           if (stringValue.split(':')[0].trim() == "reportURL") {
@@ -82,13 +80,11 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
             if (reportId) {
               var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
             }
-            // console.log(user);
             if (isValidUrl(reportURL)) {
               setValidUrl(true);
               setLoading(false);
               setURL(reportURL);
             } else {
-              console.log('coming from invalid url');
               setValidUrl(false);
               setLoading(false);
             }
@@ -99,6 +95,7 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         }
 
       }).catch(err => {
+        console.log('second api error case');
       });
   }
   React.useEffect(() => {
