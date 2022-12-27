@@ -90,6 +90,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 
                 console.log(JSON.stringify(conditionArray));
                 
+                 const latest = conditionArray.reduce(function (r, a) {
+                    return r.lastProbeTime > a.lastProbeTime ? r : a;
+                });
+
+                console.log(latest);
 
                 if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
 
