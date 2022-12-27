@@ -36,7 +36,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
           const newJobs: any[] = [];
           const mResults = b.status?.metricResults;
           mResults.forEach((element: any, index: number) => {
-            console.log(element.measurements[0]?.metadata['job-name']);
             newJobs.push(element.measurements[0]?.metadata['job-name']);
             if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
               fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'], index);
@@ -64,9 +63,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
       .then((data: any) => {
         let a = JSON.parse(data.manifest);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
-        console.log(a.status.conditions);
-        console.log('=============================');
-        console.log(JSON.stringify(conditionArray));
         const latest = conditionArray.reduce(function (r, a) {
           return r.lastProbeTime > a.lastProbeTime ? r : a;
         });
@@ -95,7 +91,10 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         }
 
       }).catch(err => {
-        console.log('second api error case');
+        setTimeout(() => {
+          setValidUrl(false);
+          setLoading(false);
+        }, 300);
       });
   }
   React.useEffect(() => {
