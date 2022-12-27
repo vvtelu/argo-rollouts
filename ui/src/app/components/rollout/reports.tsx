@@ -62,7 +62,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
       };
 
     const fetchEndpointURL = (applicationName: String, resouceName: String, nameSpace: String, version: String, jobName: String, index:number) => {
-      const [array, setArray] = React.useState([]);
+      // const [array, setArray] = React.useState([]);
         let url3 = '/api/v1/applications/' + applicationName + '/resource?name=' + jobName + '&appNamespace=' + nameSpace + '&namespace=' + nameSpace + '&resourceName=' + jobName + '&version=v1&kind=Job&group=batch'
         fetch(url3)
           .then(response => {
@@ -92,12 +92,12 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(a.status.conditions[indexValue].type)
                 if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
                   //   setData(a.status.conditions[indexValue]);
-                     setArray((array) => [...array, a.status.conditions[indexValue]]);
+                   //  setArray((array) => [...array, a.status.conditions[indexValue]]);
                     //  console.log(jobs);
                      console.log(index);
-                     if(index){
-                       console.log(array.map((x) => new Date(x.lastProbeTime)).sort().slice(-1));
-                     }
+                    //  if(index){
+                    //    console.log(array.map((x) => new Date(x.lastProbeTime)).sort().slice(-1));
+                    //  }
                      
                    }
                 // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
@@ -136,6 +136,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   // setLoading(false);
                 }
               }
+
               
             }else{
               console.log('its coming inside else');
