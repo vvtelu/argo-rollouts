@@ -68,10 +68,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
           });
   
           if (jobsList.length - 1 === lastIterationJob) {
-            console.log(latest);
-            console.log('insidelatest');
-            console.log(conditionArray.length);
-            console.log(conditionArray)
             let stringValue2 = latest.message.split(/\n/)[4];
             let stringValue = latest.message.split(/\n/)[3];
             if (stringValue.split(':')[0].trim() == "reportURL") {
