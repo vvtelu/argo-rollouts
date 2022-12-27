@@ -82,9 +82,9 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               //alert(a.status.conditions[indexValue].type);
               setAnalysisType(a.status.conditions[indexValue].type);
-              if (a.status?.conditions[indexValue]?.message) {
-                let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
-                let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
+           //   if (a.status?.conditions[indexValue]?.message) {
+                // let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
+                // let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
         
                 console.log(conditionArray);
                 
@@ -101,6 +101,28 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(jobArray);
                 if(jobArray.length-1 === index){
                   console.log('execute the new function here');
+                  let stringValue2 = latest.message.split(/\n/)[4];
+                  let stringValue = latest.message.split(/\n/)[3];
+
+                  if(stringValue.split(':')[0].trim() == "reportURL"){
+                    var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
+                    if(reportId){
+                      var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
+                    }
+                  // console.log(user);
+                    if(isValidUrl(reportURL)){
+                      setValidUrl(true);
+                      setURL(reportURL);
+                      setLoading(false);               
+                    }else{
+                      setValidUrl(false);
+                      setLoading(false);
+                    }
+                  }else{
+                    // setValidUrl(false);
+                    // setLoading(false);
+                  }
+          
                 } 
 
                 // let stringValue2 = latest.message.split(/\n/)[4];
@@ -109,40 +131,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           
                 // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
                 // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
-                if(stringValue.split(':')[0].trim() == "reportURL"){
-                  var reportId =  stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
-                  if(reportId){
-                    var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
-                  }
-                // console.log(user);
-                  if(isValidUrl(reportURL)){
-                    setValidUrl(true);
-                    setURL(reportURL);
-                    setLoading(false);
-                    // let b = setInterval(() => {
-                //   let reportPage = document.getElementById("reportPage") as HTMLIFrameElement;
-                //   if(reportPage){
-                //     reportPage.contentWindow.postMessage(user,"*");
-                //     // console.log("IFRAME MSG ", reportPage);
-                //   }
-                // }, 100);
-                // window.addEventListener('message', function(event) {
-                //   if(typeof event.data == 'string' && event.origin != window.location.origin) {
-                //     // console.log(event.data); // Message received from parent
-                //     clearInterval(b);
-                //   }
-                // });
-                //window.open(reportURL, '_blank');
-              
-                  }else{
-                    setValidUrl(false);
-                    setLoading(false);
-                  }
-                }else{
-                  // setValidUrl(false);
-                  // setLoading(false);
-                }
-              }
+                
+             // }
 
               
             }else{
