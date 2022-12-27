@@ -62,12 +62,14 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
       })
       .then((data: any) => {
         let a = JSON.parse(data.manifest);
+        console.log('first...');
+        console.log(a.status.conditions);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
         const latest = conditionArray.reduce(function (r, a) {
           return r.lastProbeTime > a.lastProbeTime ? r : a;
         });
         console.log('latest........');
-        console.log(latest);
+        console.log(conditionArray);
 
         if (jobsList.length - 1 === lastIterationJob) {
           console.log(latest.message);
