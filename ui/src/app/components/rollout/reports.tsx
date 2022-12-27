@@ -63,6 +63,7 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
       .then((data: any) => {
         let a = JSON.parse(data.manifest);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
+        console.log(conditionArray);
         if(conditionArray.length != 0){
           const latest = conditionArray.reduce(function (r, a) {
             return r.lastProbeTime > a.lastProbeTime ? r : a;
@@ -88,6 +89,7 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
             } 
           }
         }else{
+          console.log('its coming here');
           setTimeout(() => {
             setValidUrl(false);
             setLoading(false);
