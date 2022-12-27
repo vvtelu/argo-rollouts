@@ -100,6 +100,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 console.log(index);
                 console.log(jobArray);
                 if(jobArray.length-1 === index){
+                  console.log(latest.message);
                   console.log('execute the new function here');
                   let stringValue2 = latest.message.split(/\n/)[4];
                   let stringValue = latest.message.split(/\n/)[3];
@@ -115,8 +116,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                       setURL(reportURL);
                       setLoading(false);               
                     }else{
-                      setValidUrl(false);
-                      setLoading(false);
+                      // setValidUrl(false);
+                      // setLoading(false);
                     }
                   }else{
                     // setValidUrl(false);
@@ -138,8 +139,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             }else{
               console.log('its coming inside else');
               //if(analysisType.toLowerCase() != 'opsmxanalysis'){
-                setValidUrl(false);
-                setLoading(false);
+                // setValidUrl(false);
+                // setLoading(false);
              // }
               
             }
