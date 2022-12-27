@@ -11,6 +11,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [loading, setLoading] = React.useState(true);
     const [analysisType, setAnalysisType] = React.useState('');
     // const [jobs, setTotalJobs] = React.useState(null);
+    let conditionArray: any[] = [];
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
@@ -81,8 +82,13 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
         
-                console.log(a.status.conditions[indexValue].type)
+                console.log(a.status.conditions[indexValue].type);
+                conditionArray = [...conditionArray,a.status.condtions.filter((conlist: { type: string; })=> conlist.type === 'OpsmxAnalysis')];
+                console.log(conditionArray);
+                
+
                 if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
+
                   //   setData(a.status.conditions[indexValue]);
                    //  setArray((array) => [...array, a.status.conditions[indexValue]]);
                     //  console.log(jobs);
