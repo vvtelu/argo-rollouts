@@ -7,12 +7,12 @@ import '../pods/pods.scss';
 export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
   const [getURL, setURL] = React.useState('');
   const [analysisName, setAnalysisName] = React.useState('');
-  const [validUrl, setValidUrl] = React.useState(true);
+  const [validUrl, setValidUrl] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   // const [analysisType, setAnalysisType] = React.useState('');
   // const [jobs, setTotalJobs] = React.useState(null);
   let conditionArray: any[] = [];
-  let jobArray: any[] = [];
+  let jobsList: any[] = [];
   let lastIterationJob = 0;
   const isValidUrl = (props: string) => {
     try {
@@ -34,29 +34,26 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
       .then((data: any) => {
         if (data.manifest.includes('job-name')) {
           let b = JSON.parse(data.manifest);
-          // console.log(b);
           const newJobs: any[] = [];
           const mResults = b.status?.metricResults;
-          //  for(let k=0;k<3;k++){
           mResults.forEach((element: any, index: number) => {
-            // if(element.name.includes('opsmx')){
             console.log(element.measurements[0]?.metadata['job-name']);
             newJobs.push(element.measurements[0]?.metadata['job-name']);
             if (b.status?.metricResults[index]?.measurements[0]?.metadata['job-name']) {
               fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[index]?.measurements[0]?.metadata['job-name'], index);
             }
-
-            jobArray = newJobs;
+            jobsList = newJobs;
             lastIterationJob = newJobs.length - 1;
-            console.log(newJobs.length);
           });
 
         } else {
-          alert('its coming inside');
+          console.log('coming from 1st api');
           setValidUrl(false);
           setLoading(false);
         }
       }).catch(err => {
+        console.log('coming from 1st api failure');
+
         setValidUrl(false);
         setLoading(false);
       });
@@ -82,13 +79,12 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         console.log(latest);
         console.log(index);
         console.log(lastIterationJob)
-        console.log(jobArray);
-        if (jobArray.length - 1 === lastIterationJob) {
+        console.log(jobsList);
+        if (jobsList.length - 1 === lastIterationJob) {
           console.log(latest.message);
           console.log('execute the new function here');
           let stringValue2 = latest.message.split(/\n/)[4];
           let stringValue = latest.message.split(/\n/)[3];
-
           if (stringValue.split(':')[0].trim() == "reportURL") {
             var reportId = stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
             if (reportId) {
@@ -97,20 +93,20 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
             // console.log(user);
             if (isValidUrl(reportURL)) {
               setValidUrl(true);
-              setURL(reportURL);
               setLoading(false);
+              setURL(reportURL);
             } else {
-              // setValidUrl(false);
-              // setLoading(false);
-            }
-          } else {
-            // setValidUrl(false);
-            // setLoading(false);
-          }
+              console.log('coming from invalid url');
 
+              setValidUrl(false);
+              setLoading(false);
+            }
+          } 
         }
 
       }).catch(err => {
+        console.log('coming from 2n api failure');
+
         setValidUrl(false);
         setLoading(false);
       });
