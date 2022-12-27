@@ -10,6 +10,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [validUrl, setValidUrl] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
     const [analysisType, setAnalysisType] = React.useState('');
+    const [jobs, setTotalJobs] = React.useState(0);
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
@@ -43,6 +44,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
  //                     }
                     }
                  // }
+                 setTotalJobs(newJobs.length-1);
                 });
               // if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
               //   fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
@@ -58,6 +60,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
       };
 
     const fetchEndpointURL = (applicationName: String, resouceName: String, nameSpace: String, version: String, jobName: String, index:number) => {
+      const [array, setArray] = React.useState([]);
         let url3 = '/api/v1/applications/' + applicationName + '/resource?name=' + jobName + '&appNamespace=' + nameSpace + '&namespace=' + nameSpace + '&resourceName=' + jobName + '&version=v1&kind=Job&group=batch'
         fetch(url3)
           .then(response => {
@@ -77,13 +80,24 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               console.log(indexValue);
                console.log(a.status.conditions[indexValue].message);
               console.log(a.status.conditions[indexValue].type);
-              alert(a.status.conditions[indexValue].type);
+              //alert(a.status.conditions[indexValue].type);
               setAnalysisType(a.status.conditions[indexValue].type);
               if (a.status?.conditions[indexValue]?.message) {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
                 console.log(stringValue);
                 console.log(stringValue2);
+                console.log(a.status.conditions[indexValue].type)
+                if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
+                  //   setData(a.status.conditions[indexValue]);
+                     setArray((array) => [...array, a.status.conditions[indexValue]]);
+                     console.log(jobs);
+                     console.log(index);
+                     if(jobs == index){
+                       console.log(array.map((x) => new Date(x.lastProbeTime)).sort().slice(-1));
+                     }
+                     
+                   }
                 // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
                 // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
                 if(stringValue.split(':')[0].trim() == "reportURL"){
@@ -116,8 +130,8 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                     setLoading(false);
                   }
                 }else{
-                  setValidUrl(false);
-                  setLoading(false);
+                  // setValidUrl(false);
+                  // setLoading(false);
                 }
               }
               
