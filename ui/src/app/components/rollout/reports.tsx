@@ -73,28 +73,20 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             // console.log(data.manifest);
             if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
-              console.log(a.status.hasOwnProperty('succeeded'));
-              console.log(a.status.conditions);
-              console.log(a.status.conditions.length);
-
               // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
-              console.log(indexValue);
-               console.log(a.status.conditions[indexValue].message);
-              console.log(a.status.conditions[indexValue].type);
               //alert(a.status.conditions[indexValue].type);
               setAnalysisType(a.status.conditions[indexValue].type);
               if (a.status?.conditions[indexValue]?.message) {
                 let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
-                console.log(stringValue);
-                console.log(stringValue2);
+        
                 console.log(a.status.conditions[indexValue].type)
                 if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
                   //   setData(a.status.conditions[indexValue]);
                    //  setArray((array) => [...array, a.status.conditions[indexValue]]);
                     //  console.log(jobs);
-                     console.log(index);
+                     console.log('its coming inside opsmxanalyusis');
                     //  if(index){
                     //    console.log(array.map((x) => new Date(x.lastProbeTime)).sort().slice(-1));
                     //  }
@@ -140,7 +132,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               
             }else{
               console.log('its coming inside else');
-              console.log(analysisType);
               //if(analysisType.toLowerCase() != 'opsmxanalysis'){
                 setValidUrl(false);
                 setLoading(false);
