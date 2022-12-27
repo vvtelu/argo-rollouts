@@ -86,7 +86,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
         
                 console.log(a.status.conditions[indexValue].type);
                 conditionArray = [...conditionArray,a.status.conditions.filter((conlist: { type: string; })=> conlist.type === 'OpsmxAnalysis')];
-                console.log(conditionArray);
+                console.log(JSON.stringify(conditionArray));
                 
 
                 if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
