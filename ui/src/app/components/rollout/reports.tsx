@@ -51,6 +51,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               //   fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
               // }
             }else{
+              alert('its coming inside');
               setValidUrl(false);
               setLoading(false);
             }
