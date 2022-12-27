@@ -35,6 +35,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               // console.log(b);
               const newJobs = [];
               const mResults = b.status?.metricResults;
+              for(let k=0;k<3;k++){
                 mResults.forEach((element:any,index:number) => {
                  // if(element.name.includes('opsmx')){
                   console.log(element.measurements[0]?.metadata['job-name']);
@@ -48,6 +49,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 //  setTotalJobs(newJobs.length-1);
                 //  console.log(newJobs);
                 });
+              }
               // if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
               //   fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
               // }
