@@ -83,7 +83,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
         
                 console.log(a.status.conditions[indexValue].type);
-                conditionArray = [...conditionArray,a.status.condtions.filter((conlist: { type: string; })=> conlist.type === 'OpsmxAnalysis')];
+                conditionArray = [...conditionArray,a.status.conditions.filter((conlist: { type: string; })=> conlist.type === 'OpsmxAnalysis')];
                 console.log(conditionArray);
                 
 
