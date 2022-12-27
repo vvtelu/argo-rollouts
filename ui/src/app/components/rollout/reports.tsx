@@ -47,12 +47,10 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
           });
 
         } else {
-          console.log('coming from 1st api');
           setValidUrl(false);
           setLoading(false);
         }
       }).catch(err => {
-        console.log('coming from 1st api failure');
         setValidUrl(false);
         setLoading(false);
       });
@@ -67,7 +65,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
       .then((data: any) => {
         console.log(index);
         let a = JSON.parse(data.manifest);
-        console.log(conditionArray);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
         console.log(a.status.conditions);
         console.log(JSON.stringify(conditionArray));
@@ -75,10 +72,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
           return r.lastProbeTime > a.lastProbeTime ? r : a;
         });
 
-        console.log(latest);
-        console.log(index);
-        console.log(lastIterationJob)
-        console.log(jobsList);
         if (jobsList.length - 1 === lastIterationJob) {
           console.log(latest.message);
           console.log('execute the new function here');
@@ -100,6 +93,9 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
               setLoading(false);
             }
           } 
+        }else{
+          setValidUrl(false);
+          setLoading(false);
         }
 
       }).catch(err => {
