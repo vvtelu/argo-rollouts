@@ -53,7 +53,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         }
       }).catch(err => {
         console.log('coming from 1st api failure');
-
         setValidUrl(false);
         setLoading(false);
       });
@@ -97,7 +96,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
               setURL(reportURL);
             } else {
               console.log('coming from invalid url');
-
               setValidUrl(false);
               setLoading(false);
             }
@@ -105,10 +103,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         }
 
       }).catch(err => {
-        console.log('coming from 2n api failure');
-
-        setValidUrl(false);
-        setLoading(false);
       });
   }
   React.useEffect(() => {
