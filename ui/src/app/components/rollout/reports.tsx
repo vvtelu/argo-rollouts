@@ -10,7 +10,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [validUrl, setValidUrl] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
     const [analysisType, setAnalysisType] = React.useState('');
-    const [jobs, setTotalJobs] = React.useState(0);
+    const [jobs, setTotalJobs] = React.useState(null);
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
@@ -32,7 +32,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             if (data.manifest.includes('job-name')) {
               let b = JSON.parse(data.manifest);
               // console.log(b);
-              const newJobs = [];
+              const newJobs: any[] = [];
               const mResults = b.status?.metricResults;
                 mResults.forEach((element:any,index:number) => {
                  // if(element.name.includes('opsmx')){
@@ -45,6 +45,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                     }
                  // }
                  setTotalJobs(newJobs.length-1);
+                 console.log(newJobs);
                 });
               // if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
               //   fetchEndpointURL(props.reportsInput.appName, props.reportsInput.resourceName, props.reportsInput.nameSpace, props.reportsInput.version, b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']);
