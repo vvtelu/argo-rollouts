@@ -85,11 +85,15 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
         
                 console.log(conditionArray);
-                conditionArray = [...conditionArray,a.status.conditions.filter((conlist: { type: string; })=> conlist.type === 'OpsmxAnalysis')];
+                conditionArray = [...conditionArray,a.status.conditions.filter((conlist: { type: string; })=> conlist.type === 'OpsmxAnalysis').map((element: any)=>{return element})];
                 console.log(JSON.stringify(conditionArray));
                 
 
                 if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
+
+                //   latest = conditionArray.reduce(function (r, a) {
+                //     return r.lastProbeTime > a.lastProbeTime ? r : a;
+                // });
 
                   //   setData(a.status.conditions[indexValue]);
                    //  setArray((array) => [...array, a.status.conditions[indexValue]]);
