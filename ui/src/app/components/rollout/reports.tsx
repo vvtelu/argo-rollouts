@@ -76,7 +76,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           .then((data: any) => {
             console.log(analysisType);
             // console.log(data.manifest);
-            if (data.manifest.includes('message')) {
+          //  if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
               // console.log(a);
               var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
@@ -136,14 +136,14 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
              // }
 
               
-            }else{
-              console.log('its coming inside else');
-              //if(analysisType.toLowerCase() != 'opsmxanalysis'){
-                // setValidUrl(false);
-                // setLoading(false);
-             // }
+            // }else{
+            //   console.log('its coming inside else');
+            //   //if(analysisType.toLowerCase() != 'opsmxanalysis'){
+            //     // setValidUrl(false);
+            //     // setLoading(false);
+            //  // }
               
-            }
+            // }
           }).catch(err => {
             setValidUrl(false);
             setLoading(false);
