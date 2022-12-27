@@ -66,6 +66,8 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         const latest = conditionArray.reduce(function (r, a) {
           return r.lastProbeTime > a.lastProbeTime ? r : a;
         });
+        console.log('latest........');
+        console.log(latest);
 
         if (jobsList.length - 1 === lastIterationJob) {
           console.log(latest.message);
@@ -91,10 +93,6 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         }
 
       }).catch(err => {
-        setTimeout(() => {
-          setValidUrl(false);
-          setLoading(false);
-        }, 300);
       });
   }
   React.useEffect(() => {
