@@ -62,38 +62,38 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
       })
       .then((data: any) => {
         let a = JSON.parse(data.manifest);
-        console.log('first...');
-        console.log(a.status.conditions);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
-        console.log(conditionArray);
-        const latest = conditionArray.reduce(function (r, a) {
-          return r.lastProbeTime > a.lastProbeTime ? r : a;
-        });
-        console.log('latest........');
-        console.log(conditionArray);
-
-        if (jobsList.length - 1 === lastIterationJob) {
-          console.log(latest.message);
-          let stringValue2 = latest.message.split(/\n/)[4];
-          let stringValue = latest.message.split(/\n/)[3];
-          if (stringValue.split(':')[0].trim() == "reportURL") {
-            var reportId = stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
-            if (reportId) {
-              var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
-            }
-            if (isValidUrl(reportURL)) {
-              setValidUrl(true);
-              setLoading(false);
-              setURL(reportURL);
-            } else {
-              setValidUrl(false);
-              setLoading(false);
-            }
-          } 
+        if(conditionArray.length != 0){
+          const latest = conditionArray.reduce(function (r, a) {
+            return r.lastProbeTime > a.lastProbeTime ? r : a;
+          });
+  
+          if (jobsList.length - 1 === lastIterationJob) {
+            console.log(latest.message);
+            let stringValue2 = latest.message.split(/\n/)[4];
+            let stringValue = latest.message.split(/\n/)[3];
+            if (stringValue.split(':')[0].trim() == "reportURL") {
+              var reportId = stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
+              if (reportId) {
+                var reportURL = stringValue.substring(stringValue.indexOf(':') + 1).trim() + `&p=${reportId}`;
+              }
+              if (isValidUrl(reportURL)) {
+                setValidUrl(true);
+                setLoading(false);
+                setURL(reportURL);
+              } else {
+                setValidUrl(false);
+                setLoading(false);
+              }
+            } 
+          }
         }else{
-          setValidUrl(false);
-          setLoading(false);
+          setTimeout(() => {
+            setValidUrl(false);
+            setLoading(false);
+          }, 300);
         }
+       
 
       }).catch(err => {
       });
