@@ -12,6 +12,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [analysisType, setAnalysisType] = React.useState('');
     // const [jobs, setTotalJobs] = React.useState(null);
     let conditionArray: any[] = [];
+    let jobArray: any[] = [];
     const isValidUrl = (props: string) => {
       try {
         new URL(props);
@@ -33,7 +34,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             if (data.manifest.includes('job-name')) {
               let b = JSON.parse(data.manifest);
               // console.log(b);
-              const newJobs = [];
+              const newJobs: any[] = [];
               const mResults = b.status?.metricResults;
               for(let k=0;k<3;k++){
                 mResults.forEach((element:any,index:number) => {
@@ -48,6 +49,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                  // }
                 //  setTotalJobs(newJobs.length-1);
                 //  console.log(newJobs);
+                jobArray = newJobs;
                 });
               }
               // if (b.status?.metricResults[b.status.metricResults.length - 1]?.measurements[b.status.metricResults.length - 1]?.metadata['job-name']) {
@@ -95,22 +97,16 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 });
 
                 console.log(latest);
+                console.log(index);
+                console.log(jobArray);
+                if(jobArray.length-1){
+                  
+                }
 
-                if(a.status.conditions[indexValue].type == 'OpsmxAnalysis'){
+                // let stringValue2 = latest.message.split(/\n/)[4];
+                // let stringValue = latest.message.split(/\n/)[3];
 
-                //   latest = conditionArray.reduce(function (r, a) {
-                //     return r.lastProbeTime > a.lastProbeTime ? r : a;
-                // });
-
-                  //   setData(a.status.conditions[indexValue]);
-                   //  setArray((array) => [...array, a.status.conditions[indexValue]]);
-                    //  console.log(jobs);
-                     console.log('its coming inside opsmxanalyusis');
-                    //  if(index){
-                    //    console.log(array.map((x) => new Date(x.lastProbeTime)).sort().slice(-1));
-                    //  }
-                     
-                   }
+          
                 // let stringValue1 = a.status?.conditions[indexValue]?.message.split(/\n/)[1];
                 // var user =  stringValue1.substring(stringValue1.indexOf(':') + 1).trim();
                 if(stringValue.split(':')[0].trim() == "reportURL"){
