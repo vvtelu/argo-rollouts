@@ -65,6 +65,7 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
         console.log('first...');
         console.log(a.status.conditions);
         a.status.conditions.filter((conlist: { type: string; }) => conlist.type === 'OpsmxAnalysis').map((element: any) => { conditionArray = [...conditionArray, element] });
+        console.log(conditionArray);
         const latest = conditionArray.reduce(function (r, a) {
           return r.lastProbeTime > a.lastProbeTime ? r : a;
         });
