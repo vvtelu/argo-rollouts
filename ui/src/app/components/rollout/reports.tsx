@@ -9,7 +9,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
     const [analysisName, setAnalysisName] = React.useState('');
     const [validUrl, setValidUrl] = React.useState(true);
     const [loading, setLoading] = React.useState(true);
-    const [analysisType, setAnalysisType] = React.useState('');
+    // const [analysisType, setAnalysisType] = React.useState('');
     // const [jobs, setTotalJobs] = React.useState(null);
     let conditionArray: any[] = [];
     let jobArray: any[] = [];
@@ -77,14 +77,15 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             return response.json()
           })
           .then((data: any) => {
-            console.log(analysisType);
+            alert(index);
+            // console.log(analysisType);
             // console.log(data.manifest);
           //  if (data.manifest.includes('message')) {
               let a = JSON.parse(data.manifest);
               // console.log(a);
-              var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
+              //var indexValue = a.status.hasOwnProperty('succeeded')? a.status.conditions.length - 2: a.status.conditions.length - 1;
               //alert(a.status.conditions[indexValue].type);
-              setAnalysisType(a.status.conditions[indexValue].type);
+             // setAnalysisType(a.status.conditions[indexValue].type);
            //   if (a.status?.conditions[indexValue]?.message) {
                 // let stringValue2 = a.status?.conditions[indexValue]?.message.split(/\n/)[4];
                 // let stringValue = a.status?.conditions[indexValue]?.message.split(/\n/)[3];
@@ -93,6 +94,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 
                 a.status.conditions.filter((conlist: { type: string; })=> conlist.type === 'OpsmxAnalysis').map((element: any)=>{conditionArray = [...conditionArray,element]});
                 
+                console.log(a.status.conditions);
                 console.log(JSON.stringify(conditionArray));
                 
                  const latest = conditionArray.reduce(function (r, a) {
