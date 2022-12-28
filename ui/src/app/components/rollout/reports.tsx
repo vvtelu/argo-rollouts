@@ -90,8 +90,12 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
           }
         }else{
           console.log('checking message object');
+          console.log(jobsList.length);
+          console.log(lastIterationJob);
+          if (jobsList.length - 1 === lastIterationJob) {
             setValidUrl(false);
             setLoading(false);
+          }
         }
       }).catch(err => {
       });
