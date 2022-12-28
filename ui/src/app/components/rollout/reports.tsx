@@ -7,7 +7,7 @@ import '../pods/pods.scss';
 export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
   const [getURL, setURL] = React.useState('');
   const [analysisName, setAnalysisName] = React.useState('');
-  const [validUrl, setValidUrl] = React.useState(false);
+  const [validUrl, setValidUrl] = React.useState(true);
   const [loading, setLoading] = React.useState(true);
   // const [analysisType, setAnalysisType] = React.useState('');
   // const [jobs, setTotalJobs] = React.useState(null);
