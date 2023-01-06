@@ -98,6 +98,7 @@ export const RolloutWidget = (props: {rollout: RolloutRolloutInfo; interactive?:
     const [revisionData,setData] = React.useState([]);
 
     const passDataToRollout = (data:any) => {
+        console.log(data);
         setreport(data.showReports);
         setData(data);
         const divElement = document.getElementById('reportId');
