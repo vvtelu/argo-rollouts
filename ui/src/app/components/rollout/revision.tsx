@@ -77,7 +77,6 @@ export const RevisionWidget = (props: RevisionWidgetProps) => {
             {!collapsed && (
                 <React.Fragment>
                     <ReplicaSets replicaSets={revision.replicaSets} />
-                    {console.log(props)}
                     {(revision.analysisRuns || []).length > 0 && (
                         <React.Fragment>
                             <div style={{marginTop: '1em'}}>
@@ -103,10 +102,6 @@ const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[],appNam
                   {/* {console.log('rollout',props.appName)} */}
                   {/* {console.log('analysis', analysisRuns)} */}
                 {analysisRuns.map((ar) => {
-                     <>
-                     {console.log('arrrrr')}
-                     {console.log(ar)}
-                   </>
                     let temp = ar.objectMeta.name.split('-');
                     let len = temp.length;
                     let resourceName = ar.objectMeta.name;

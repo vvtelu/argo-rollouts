@@ -98,7 +98,6 @@ export const RolloutWidget = (props: {rollout: RolloutRolloutInfo; interactive?:
     const [revisionData,setData] = React.useState([]);
 
     const passDataToRollout = (data:any) => {
-        console.log(data);
         setreport(data.showReports);
         setData(data);
         const divElement = document.getElementById('reportId');
@@ -118,7 +117,6 @@ export const RolloutWidget = (props: {rollout: RolloutRolloutInfo; interactive?:
         <React.Fragment>
                 {showreport && 
                <ThemeDiv id ='reportId' className='report-bg reports__info'>
-                {console.log(rollout)};
                    <ReportsWidget clickback={()=> setreport(false)} reportsInput={revisionData}/>
                 </ThemeDiv>}
             <div className='rollout__row rollout__row--top'>
