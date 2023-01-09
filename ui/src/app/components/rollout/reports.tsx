@@ -94,6 +94,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 }
                 if(isValidUrl(reportURL)){
                   setTimeout(() => {
+
                     setValidUrl(true);
                     setLoading(false);
                     setURL(reportURL);
@@ -103,7 +104,12 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   setLoading(false);
                 }
               }else{
+                setValidUrl(false);
+                setLoading(false)
+              }
+              if(!stringValue2 || !stringValue){
                 console.log('report url is not exist');
+
                 setValidUrl(false);
                 setLoading(false)
               } 
