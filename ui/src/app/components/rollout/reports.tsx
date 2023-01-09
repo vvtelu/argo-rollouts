@@ -98,8 +98,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                   setValidUrl(false);
                   setLoading(false);
                 }
+              }else{
+                console.log('report url is not exist');
+                setValidUrl(false);
+                setLoading(false)
               } 
-              console.log('its coming inside equal');
             }
           }else{
             console.log('its coming insdie else not equal')
