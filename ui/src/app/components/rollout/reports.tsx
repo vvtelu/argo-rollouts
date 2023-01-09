@@ -23,19 +23,16 @@ export const ReportsWidget = (props: { clickback: any; reportsInput: {} }) => {
     }
   }
   const getAppnamespace = (props: any) => {
-    let url1 = 'api/v1/applications?fields=items.metadata.namespace&selector=&appNamespace=&name=' + props.reportsInput.appName;
+    let url1 = 'api/v1/applications?fields=items.metadata.namespace&selector=&appNamespace=&name=' + props.reportsInput.appName
     fetch(url1)
       .then(response => {
         return response.json()
       })
       .then((data: any) => {
-        console.log('getappnamespace');
-        console.log(data);
         if(data.items[0].metadata.namespace){
           LoadApiCalls(props,data.items[0].metadata.namespace)
         }
       }).catch(err => {
-        
       });
   };
   const LoadApiCalls = (props: any,appNamespace: string) => {
