@@ -85,6 +85,11 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
               let stringValue = latest.message.split(/\n/)[3];
               console.log(stringValue2);
               console.log(stringValue);
+              if(!stringValue){
+                console.log('report url is not exist');
+                setValidUrl(false);
+                setLoading(false)
+              } 
               console.log(stringValue.split(':')[0].trim());
               console.log('its ending here')
               if(stringValue.split(':')[0].trim() == "reportURL"){
@@ -107,12 +112,7 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
                 setValidUrl(false);
                 setLoading(false)
               }
-              if(!stringValue2 || !stringValue){
-                console.log('report url is not exist');
-
-                setValidUrl(false);
-                setLoading(false)
-              } 
+              
             }
           }else{
             console.log('its coming insdie else not equal')
