@@ -117,7 +117,6 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
           }else{
             console.log('its coming insdie else not equal')
             if (jobsList.length - 1 === lastIterationJob) {
-              alert('coming');
               setValidUrl(false);
               setLoading(false);
             }
