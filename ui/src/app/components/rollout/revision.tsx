@@ -39,6 +39,7 @@ interface RevisionWidgetProps {
     current: boolean;
     message: String;
     appName: String;
+    rollout: any;
 }
 
 export const RevisionWidget = (props: RevisionWidgetProps) => {
@@ -76,10 +77,11 @@ export const RevisionWidget = (props: RevisionWidgetProps) => {
             {!collapsed && (
                 <React.Fragment>
                     <ReplicaSets replicaSets={revision.replicaSets} />
+                    {console.log(props)}
                     {(revision.analysisRuns || []).length > 0 && (
                         <React.Fragment>
                             <div style={{marginTop: '1em'}}>
-                                <AnalysisRunWidget analysisRuns={revision.analysisRuns} appName={props.appName} analysisRunFunction={passDataToRevision}/>
+                                <AnalysisRunWidget analysisRuns={revision.analysisRuns} appName={props.appName} rollout={props} analysisRunFunction={passDataToRevision}/>
                             </div>
                         </React.Fragment>
                     )}
@@ -89,10 +91,11 @@ export const RevisionWidget = (props: RevisionWidgetProps) => {
     );
 };
 
-const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[],appName?: String,analysisRunFunction(data: { appName: String; resourceName: string; nameSpace: string; version: string; }): any;}) => {
+const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[],appName?: String,rollout: any,analysisRunFunction(data: { appName: String; resourceName: string; nameSpace: string; version: string; }): any;}) => {
     const {analysisRuns} = props;
     const [selection, setSelection] = React.useState<RolloutAnalysisRunInfo>(null);
-
+    console.log('inside analysis run');
+    console.log(props);
     return (
         <ThemeDiv className='analysis'>
             <div className='analysis-header'>Analysis Runs</div>
@@ -100,12 +103,17 @@ const AnalysisRunWidget = (props: {analysisRuns: RolloutAnalysisRunInfo[],appNam
                   {/* {console.log('rollout',props.appName)} */}
                   {/* {console.log('analysis', analysisRuns)} */}
                 {analysisRuns.map((ar) => {
+                     <>
+                     {console.log('arrrrr')}
+                     {console.log(ar)}
+                   </>
                     let temp = ar.objectMeta.name.split('-');
                     let len = temp.length;
                     let resourceName = ar.objectMeta.name;
                     let namespace = ar.objectMeta.namespace;
                     let version = ar.objectMeta.resourceVersion;
                     return (
+                        
                         <Tooltip
                             key={ar.objectMeta?.name}
                             content={
