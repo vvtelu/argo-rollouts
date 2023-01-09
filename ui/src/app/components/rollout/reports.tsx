@@ -83,6 +83,10 @@ export const ReportsWidget = (props: {  clickback: any; reportsInput: {}}) => {
             if(jobsList.length - 1 === lastIterationJob){
               let stringValue2 = latest.message.split(/\n/)[4];
               let stringValue = latest.message.split(/\n/)[3];
+              console.log(stringValue2);
+              console.log(stringValue);
+              console.log(stringValue.split(':')[0].trim());
+              console.log('its ending here')
               if(stringValue.split(':')[0].trim() == "reportURL"){
                 var reportId = stringValue2.substring(stringValue2.indexOf(':') + 1).trim();
                 if(reportId){
